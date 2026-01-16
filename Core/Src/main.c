@@ -142,7 +142,9 @@ int main(void)
 				/ (ts_cal2 - ts_cal1)) + 30;
 
 		// --- Step 3: Print Results ---
-		sprintf(msg, "Volt: %lu mV | Temp: %ld C\r\n", vdda_mv, temperature_c);
+		// CSV Format (Voltage,Temperature)
+		sprintf(msg, "%lu,%ld\r\n", vdda_mv, temperature_c);
+		//sprintf(msg, "Volt: %lu mV | Temp: %ld C\r\n", vdda_mv, temperature_c);
 		HAL_UART_Transmit(&huart2, (uint8_t*) msg, strlen(msg), 100);
 
 		HAL_Delay(1000);

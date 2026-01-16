@@ -51,7 +51,19 @@ The final temperature is computed by interpolating the voltage-compensated raw v
 * `Core/Inc/stm32g0xx_hal_conf.h`: HAL Configuration.
 * `HealthMonitor.ioc`: STM32CubeMX Configuration file.
 
+## 📊 Python Visualization (HIL Dashboard)
+This project includes a Python script to visualize the real-time telemetry stream.
 
+### Features
+* **Live Plotting:** Displays Voltage (mV) and Temperature (°C) on dual dynamic graphs.
+* **Auto-Scaling:** Automatically adjusts Y-axis based on incoming data range.
+* **CSV Parsing:** Decodes the comma-separated UART stream from the STM32.
+
+### Usage
+1. Navigate to the `scripts/` directory.
+2. Install dependencies: `pip install -r requirements.txt`
+3. Connect the Nucleo board via USB.
+4. Run the dashboard: `python dashboard.py`
 
 
 
