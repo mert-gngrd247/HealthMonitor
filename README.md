@@ -24,7 +24,7 @@ Instead of polling `HAL_ADC_GetValue()`, the system configures the DMA controlle
 ```c
 // ADC starts once, DMA manages the data transfer forever
 HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_buffer, 2);
-
+```
 ### 2. Voltage Compensation
 Raw ADC values on the STM32 depend on the supply voltage (VDDA). Since USB power can fluctuate (e.g., 3.28V vs 3.3V), a raw reading of "932" is ambiguous. The system calculates the *actual* supply voltage first to normalize the sensor data:
 
