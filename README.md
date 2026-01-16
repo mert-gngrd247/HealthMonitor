@@ -26,29 +26,31 @@ Instead of polling `HAL_ADC_GetValue()`, the system configures the DMA controlle
 HAL_ADC_Start_DMA(&hadc1, (uint32_t*)adc_buffer, 2);
 
 ### 2. Voltage Compensation
-Raw ADC values on the STM32 depend on the supply voltage ($V_{DDA}$). Since USB power can fluctuate (e.g., 3.28V vs 3.3V), a raw reading of "932" is ambiguous.
-The system calculates the *actual* supply voltage first to normalize the sensor data:
-$$V_{DDA} = 3000 mV \times \frac{VREFINT_{CAL}}{VREFINT_{DATA}}$$
+Raw ADC values on the STM32 depend on the supply voltage (VDDA). Since USB power can fluctuate (e.g., 3.28V vs 3.3V), a raw reading of "932" is ambiguous. The system calculates the *actual* supply voltage first to normalize the sensor data:
+
+`VDDA = 3000 mV * (VREFINT_CAL / VREFINT_DATA)`
 
 ### 3. Temperature Calculation (Linear Interpolation)
 The code retrieves the factory calibration constants stored in the System Memory (OTP area) during manufacturing:
+
 * `TS_CAL1`: Raw ADC value at 30°C (3.0V)
 * `TS_CAL2`: Raw ADC value at 130°C (3.0V)
 
 The final temperature is computed by interpolating the voltage-compensated raw value between these two calibration points.
 
 ## 🚀 How to Run
-1.  Open the project in **STM32CubeIDE**.
-2.  Build and Flash to the **Nucleo-G031K8** board.
-3.  Open a Serial Terminal (115200 baud, 8-N-1).
-4.  **Observe:**
-    * Real-time Voltage and Temperature logs.
-    * **Test:** Place your finger on the MCU to raise the temp > 31°C. The Green LED will light up.
+1. Open the project in **STM32CubeIDE**.
+2. Build and Flash to the **Nucleo-G031K8** board.
+3. Open a Serial Terminal (115200 baud, 8-N-1).
+4. **Observe:**
+   * Real-time Voltage and Temperature logs.
+   * **Test:** Place your finger on the MCU to raise the temp > 31°C. The Green LED will light up.
 
 ## 📂 File Structure
 * `Core/Src/main.c`: Contains the Primary Control Loop, Math logic, and Hardware Initialization.
 * `Core/Inc/stm32g0xx_hal_conf.h`: HAL Configuration.
 * `HealthMonitor.ioc`: STM32CubeMX Configuration file.
+
 
 
 
